@@ -3,6 +3,7 @@
 
 ## 요구사항
 > 용준 : 유진좌 conversation_logic.py의 TODO를 참고
+> 
 > 유진 : VoiceToText.py에서 speak 함수의 TTS 모델 추가 필요
 
 ## Conversation 흐름
