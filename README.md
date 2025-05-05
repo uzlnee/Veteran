@@ -3,6 +3,8 @@
 
 ## 요구사항
 > 용준 : 유진좌 conversation_logic.py의 TODO를 참고
+> 
+> 유진 : VoiceToText.py에서 speak 함수의 TTS 모델 추가 필요
 
 ## Conversation 흐름
 > 정해진 필수 질문들을 듣고, LLM이 판단해 정보가 전부 기재돼 있다면 다음 질문으로, 정보가 부족하다면 다시 같은 질문을 합니다. 
