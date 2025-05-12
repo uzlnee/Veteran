@@ -1,7 +1,9 @@
-essential_question1: "어르신의 성함과 성별, 생년월일을 알려 주세요."
-essential_question2: "어르신의 주소를 자세히 알려 주세요."
-essential_question3: "어르신의 경력 사항을 알려 주세요."
-essential_question4: "어르신께서 현재 앓고 계신 질환이나 불편하신 점이 있으시다면 말씀해 주세요. \
-                      건강에 부담이 될 수 있는 업무는 피하도록 도와드리고 싶습니다."
-essential_question5: "언제부터 근무가 가능하신지 알려 주세요.
-                      근무 가능일과 시간대를 말씀해 주시면 좋습니다."
+essential_question1: "어르신의 성함을 알려 주세요."
+essential_question2: "어르신의 나이를 알려 주세요."
+essential_question3: "어르신의 거주지를 알려 주세요. 도, 시, 구 까지만 알려 주시면 됩니다."
+essential_question4: "근무가 가능한 시간대를 알려 주세요."
+essential_question5: "가지고 계신 자격증이 있다면 알려 주세요."
+essential_question6: "선호하는 직종이 있다면 알려 주세요."
+essential_question7: "신체 중 불편한 곳이 있다면 알려 주세요."
+essential_question8: "어르신의 경력 사항을 알려 주세요."
+essential_question9: "어르신의 학력 사항을 알려 주세요."
