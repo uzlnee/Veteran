@@ -1,0 +1,13 @@
+output_format: "당신은 어르신의 대화 기록을 읽고 정보를 수집하는 역할을 맡고 있습니다. \
+                       주어진 대화 기록을 읽고, 명시된 정보를 수집하세요. \
+                       수집된 정보는 json 형태로 내보내세요.
+                       **수집해야 할 정보**
+                       1. name
+                       2. age
+                       3. location
+                       4. available_time
+                       5. license
+                       6. preferred_field
+                       7. health_condition
+                       8. carrer
+                       9. education"

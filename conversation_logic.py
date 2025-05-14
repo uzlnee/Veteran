@@ -1,6 +1,7 @@
 
 from schemas.ConversationState import ConversationState
 from schemas.ValidationResponse import ValidationResponse
+from schemas.ElderlyUser import ElderlyUser
 import yaml
 from dotenv import load_dotenv
 
@@ -10,28 +11,38 @@ from langchain.schema.messages import HumanMessage, SystemMessage
 from langchain.schema.messages import HumanMessage
 from VoiceToText import VoiceToText
 
+
 class conversation_logic:
     def __init__(self):
         question_config = yaml.safe_load(open('./configs/essential_question_prompts.yaml', 'r', encoding='utf-8'))
         validation_config = yaml.safe_load(open('./configs/validation_prompts.yaml', 'r', encoding='utf-8'))
+        output_config = yaml.safe_load(open('./configs/output_format_prompt.yaml', 'r', encoding='utf-8'))
         load_dotenv()
 
         self.question_list = [question_config['essential_question1'], 
                         question_config['essential_question2'],
                         question_config['essential_question3'],
                         question_config['essential_question4'],
-                        question_config['essential_question5']]
-
+                        question_config['essential_question5'],
+                        question_config['essential_question6'],
+                        question_config['essential_question7'],
+                        question_config['essential_question8'],
+                        question_config['essential_question9'],]
 
         self.validation_list = [validation_config['validation_question1'],
                         validation_config['validation_question1'],
                         validation_config['validation_question1'],
                         validation_config['validation_question1'],
+                        validation_config['validation_question1'],
+                        validation_config['validation_question1'],
+                        validation_config['validation_question1'],
+                        validation_config['validation_question1'],
                         validation_config['validation_question1']]
         
+        self.output_prompt = output_config['output_format']
         self.gpt = ChatOpenAI(model="gpt-4o-mini",)
         self.valid_gpt = self.gpt.with_structured_output(ValidationResponse)
-
+        self.valid_gpt_output = self.gpt.with_structured_output(ElderlyUser)
         self.vtt = VoiceToText()
 
 #  ---------------------------NODES-----------------------------------------------------
@@ -92,7 +103,7 @@ class conversation_logic:
             return "Retry"
         
     def before_next(self, state: ConversationState) -> ConversationState:
-        self.vtt.speak("어르신, 다음 질문으로 넘어가겠습니다.")
+        self.vtt.speak("감사합니다. 다음 질문으로 넘어가겠습니다.")
         
         return {'phase': state['phase'] + 1,}
 
@@ -135,7 +146,7 @@ class conversation_logic:
         graph.recursion_limit = 50
         self.graph = graph
 
-    def run(self):
+    def _run(self):
         self.compose_workflow()
         dummy_input = {'phase': 0,
               'history': [],
@@ -145,3 +156,11 @@ class conversation_logic:
         result = self.graph.invoke(dummy_input)
 
         return result
+
+    def run(self):
+        result = self._run()
+        history = result['history']
+        validation_input = [SystemMessage(self.output_prompt), HumanMessage(f'대화 내용 : {history}')]
+        output = self.valid_gpt_output.invoke(validation_input)
+        return output
+    
