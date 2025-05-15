@@ -53,7 +53,7 @@ else:
         current += timedelta(weeks=1)
 
     week_options = [
-        f"{ws.year}년 {ws.month}월 {ws.isocalendar()[1]}주차 ({ws.strftime('%m/%d')}~{(ws + timedelta(days=6)).strftime('%m/%d')})"
+        f"{ws.year}년 {ws.month}월 {(ws.day-1)//7+1}주차 ({ws.strftime('%m/%d')}~{(ws + timedelta(days=6)).strftime('%m/%d')})"
         for ws in week_starts
     ]
     selected_idx = st.selectbox("조회할 주차 선택", range(len(week_starts)), format_func=lambda i: week_options[i])
