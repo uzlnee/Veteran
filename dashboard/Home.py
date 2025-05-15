@@ -4,7 +4,7 @@ import os
 from datetime import datetime, timedelta
 import pandas as pd
 
-BASE_DIR = "/Users/jeong-yujin/Desktop/Veteran/recordings"
+BASE_DIR = "../recordings"
 
 st.set_page_config(page_title="베테랑 대시보드", layout="wide")
 st.title("🏠 베테랑 관리자 대시보드")

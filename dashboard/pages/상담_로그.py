@@ -58,7 +58,7 @@ import os
 import json
 from datetime import datetime
 
-BASE_DIR = "/Users/jeong-yujin/Desktop/Veteran/recordings"
+BASE_DIR = "../recordings"
 
 st.title("📞 상담 로그")
 
