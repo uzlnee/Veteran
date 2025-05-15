@@ -226,24 +226,42 @@ def save_json_output(data: Dict[str, Any]) -> None:
     print(f"\nJSON 결과가 {filename}에 저장되었습니다.")
 
 def main():
-    # 테스트용 사용자 정보
-    test_user = ElderlyUser(
-        name="김영수",
-        age=68,
-        location="경기도 수원시 팔달구 권광로 367번길 11",
-        available_time="오전 근무만 가능",
-        license=["요양보호사 자격증", "공인중개사"],
-        preferred_field=["요양", "청소", "시설관리"],
-        health_condition="허리 디스크로 무거운 물건은 불가",
-        career="수원시청 시설관리직 15년, 대한부동산 공인중개사 10년",
-        education="고등학교 졸업"
-    )
+    import os
+    import sys
+    
+    # 명령행 인자 처리
+    if len(sys.argv) > 1:
+        # 특정 폴더가 지정된 경우
+        recording_folder = sys.argv[1]
+        if not os.path.isdir(recording_folder):
+            print(f"Error: {recording_folder}는 유효한 폴더가 아닙니다.")
+            return
+    else:
+        # 가장 최근 녹음 폴더 사용
+        recording_folder = get_latest_recording_folder()
+        if not recording_folder:
+            print("Error: 처리할 녹음 폴더를 찾을 수 없습니다.")
+            return
+    
+    # metadata.json 파일 경로
+    metadata_path = os.path.join(recording_folder, "metadata.json")
+    if not os.path.exists(metadata_path):
+        print(f"Error: {metadata_path} 파일이 존재하지 않습니다.")
+        return
+    
+    # 사용자 정보 로드
+    user = load_user_from_metadata(metadata_path)
+    if not user:
+        print("Error: 사용자 정보를 로드할 수 없습니다.")
+        return
+    
+    print(f"\n[INFO] {recording_folder} 폴더의 사용자 정보를 처리합니다.")
     
     # 직업 추천 서비스 초기화
     job_recommender = JobRecommender()
     
     # 직업 추천
-    recommended_jobs = job_recommender.get_recommended_jobs(test_user)
+    recommended_jobs = job_recommender.get_recommended_jobs(user)
     if not recommended_jobs:
         print("추천할 수 있는 직업이 없습니다.")
         return
@@ -252,14 +270,109 @@ def main():
     job_opening_service = JobOpeningService()
     
     # 모든 추천 직업에 대한 구인 정보 조회
-    job_openings = job_opening_service.get_job_openings(recommended_jobs[0].get('job_code'), test_user.location)
+    job_openings = job_opening_service.get_job_openings(recommended_jobs[0].get('job_code'), user.location)
     
     # 콘솔에 출력
-    print_recommendation_results(test_user, recommended_jobs, job_openings)
+    print_recommendation_results(user, recommended_jobs, job_openings)
     
     # JSON 형식으로 변환 및 저장
-    json_output = generate_json_output(test_user, recommended_jobs, job_openings)
+    json_output = generate_json_output(user, recommended_jobs, job_openings)
+    
+    # 결과 파일 저장 경로
+    result_path = os.path.join(recording_folder, f"{user.name}_{datetime.now().strftime('%Y%m%d')}.json")
+    with open(result_path, 'w', encoding='utf-8') as f:
+        json.dump(json_output, f, ensure_ascii=False, indent=2)
+    print(f"\n결과가 {result_path}에 저장되었습니다.")
+    
+    # 기존 저장 방식도 유지 (프로젝트 루트에 저장)
     save_json_output(json_output)
+
+def load_user_from_metadata(metadata_path):
+    """metadata.json 파일에서 사용자 정보를 로드합니다."""
+    try:
+        with open(metadata_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        # license와 preferred_field가 리스트가 아닌 경우 리스트로 변환
+        license_data = data.get('license', [])
+        if isinstance(license_data, str):
+            license_data = [license_data] if license_data else []
+        
+        preferred_field_data = data.get('preferred_field', [])
+        if isinstance(preferred_field_data, str):
+            preferred_field_data = [preferred_field_data] if preferred_field_data else []
+        
+        # career 필드명이 carrer로 잘못 입력된 경우 처리
+        career = data.get('career', data.get('carrer', ''))
+        
+        return ElderlyUser(
+            name=data.get('name', ''),
+            age=data.get('age', 0),
+            location=data.get('location', ''),
+            available_time=data.get('available_time', ''),
+            license=license_data,
+            preferred_field=preferred_field_data,
+            health_condition=data.get('health_condition', ''),
+            career=career,
+            education=data.get('education', '')
+        )
+    except Exception as e:
+        print(f"메타데이터 로드 중 오류 발생: {e}")
+        return None
+
+def get_latest_recording_folder():
+    """recordings 폴더에서 가장 최근의 녹음 폴더를 찾습니다."""
+    import os
+    from datetime import datetime
+    
+    recordings_dir = "../recordings"
+    if not os.path.exists(recordings_dir):
+        print(f"Error: {recordings_dir} 폴더가 존재하지 않습니다.")
+        return None
+    
+    folders = []
+    for folder in os.listdir(recordings_dir):
+        folder_path = os.path.join(recordings_dir, folder)
+        if os.path.isdir(folder_path):
+            try:
+                # 폴더명이 날짜_시간 형식인지 확인 (예: 20250515_143009)
+                date_str, time_str = folder.split('_')
+                if len(date_str) == 8 and len(time_str) == 6:
+                    dt = datetime.strptime(folder, "%Y%m%d_%H%M%S")
+                    folders.append((folder, dt))
+            except (ValueError, IndexError):
+                continue
+    
+    if not folders:
+        print("Error: 유효한 녹음 폴더가 없습니다.")
+        return None
+    
+    # 날짜 기준으로 정렬하여 가장 최근 폴더 반환
+    folders.sort(key=lambda x: x[1], reverse=True)
+    return os.path.join(recordings_dir, folders[0][0])
+
+def list_recording_folders():
+    """recordings 폴더의 모든 녹음 폴더를 리스트로 반환합니다."""
+    import os
+    
+    recordings_dir = "../recordings"
+    if not os.path.exists(recordings_dir):
+        print(f"Error: {recordings_dir} 폴더가 존재하지 않습니다.")
+        return []
+    
+    folders = []
+    for folder in os.listdir(recordings_dir):
+        folder_path = os.path.join(recordings_dir, folder)
+        if os.path.isdir(folder_path):
+            try:
+                # 폴더명이 날짜_시간 형식인지 확인 (예: 20250515_143009)
+                date_str, time_str = folder.split('_')
+                if len(date_str) == 8 and len(time_str) == 6:
+                    folders.append(folder_path)
+            except (ValueError, IndexError):
+                continue
+    
+    return folders
 
 if __name__ == "__main__":
     main() 
