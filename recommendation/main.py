@@ -214,8 +214,13 @@ def generate_json_output(user: ElderlyUser, recommended_jobs: List[dict], job_op
     
     return result
 
-def save_json_output(data: Dict[str, Any], filename: str = "recommendation_results.json") -> None:
-    """JSON 데이터를 파일로 저장합니다."""
+def save_json_output(data: Dict[str, Any]) -> None:
+    """JSON 데이터를 파일로 저장합니다. 파일명은 name_yyyymmdd.json 형식으로 생성됩니다."""
+    # 사용자 이름과 현재 날짜로 파일명 생성
+    name = data.get("jobSeeker", {}).get("name", "unknown")
+    current_date = datetime.now().strftime("%Y%m%d")
+    filename = f"{name}_{current_date}.json"
+    
     with open(filename, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
     print(f"\nJSON 결과가 {filename}에 저장되었습니다.")
