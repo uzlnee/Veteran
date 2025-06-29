@@ -5,12 +5,11 @@ import numpy as np
 import whisper
 import torch
 import openai
-import playsound
 from datetime import datetime
 from dotenv import load_dotenv
-from scipy.io.wavfile import write
-import sounddevice as sd
-from gtts import gTTS
+# from scipy.io.wavfile import write
+# import sounddevice as sd
+# from gtts import gTTS
 from collections import deque
 
 class VoiceToText:
@@ -49,7 +48,6 @@ class VoiceToText:
 
         tts = gTTS(text=text, lang='ko')
         tts.save(path)
-        playsound.playsound(path)
 
         self._append_transcript("[AI]", text)
         self.ai_counter += 1
