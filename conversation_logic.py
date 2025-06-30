@@ -130,11 +130,12 @@ class conversation_logic:
         await self.client.say(call_sid, "어르신, 대화가 종료되었습니다.")
         await self.client.hangup(call_sid) 
         return {'history': state['history'] + [f"[대화 종료]"],}
-
+      
 
     async def retry(self, state: ConversationState) -> ConversationState:
         new_history = state['history'][:-2]
         return {'history': new_history}
+
     
 # ---------------------------WORKFLOW-----------------------------------------------------
 
