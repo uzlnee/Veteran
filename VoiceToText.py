@@ -1,27 +1,18 @@
 import os
-import time
 import yaml
-import numpy as np
-import whisper
-import torch
 import openai
 from datetime import datetime
 from dotenv import load_dotenv
-# from scipy.io.wavfile import write
-# import sounddevice as sd
-# from gtts import gTTS
-from collections import deque
+from rtzr_client import RTZRClient
 
 class VoiceToText:
     def __init__(self, model_size="small"):
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.model_size = model_size
+        load_dotenv()        
         
-        # Load Whisper model
-        self.whisper_model = whisper.load_model(self.model_size).to(self.device)
+        # RTZR STT 클라이언트 초기화
+        self.rtzr_client = RTZRClient()
         
         # OpenAI API Key
-        load_dotenv()
         openai.api_key = os.getenv("OPENAI_API_KEY")
         self.client = openai.OpenAI(api_key=openai.api_key)
 
@@ -99,7 +90,7 @@ class VoiceToText:
             write(path, sample_rate, recorded)
             print(f"[저장 완료] {path}에 저장되었습니다.")
 
-            # Whisper STT + 정제
+            # RTZR STT + 정제
             text = self.listen(path)
             self._append_transcript("[USER]", text)
             self.user_counter += 1
@@ -113,15 +104,21 @@ class VoiceToText:
         """
         사용자의 음성을 받아 텍스트로 변환하고, 정제된 문장을 반환하는 함수
         - audio_path: .wav 파일 경로
+        RTZR STT API의 sommers 모델을 사용합니다.
         """
-        result = self.whisper_model.transcribe(audio_path, fp16=False, language="ko")
-        raw_text = result["text"].strip()
-        normalized = self.normalize(raw_text)
-        return normalized
+        try:
+            raw_text = self.rtzr_client.transcribe_file(audio_path, model_name="sommers")
+            if not raw_text:
+                return "[음성 인식 실패]"
+            normalized = self.normalize(raw_text)
+            return normalized
+        except Exception as e:
+            print(f"[RTZR STT 오류] {str(e)}")
+            return "[음성 인식 오류]"
     
     def normalize(self, text: str) -> str:
         """
-        Whisper로부터 받은 텍스트에서 잘못된 단어나 문장들을 교정하는 함수
+        RTZR STT로부터 받은 텍스트에서 잘못된 단어나 문장들을 교정하는 함수
         """
         prompt = (
             f'{self.correction_prompt}\n"{text}"'

@@ -1,7 +1,7 @@
-from langchain_core.pydantic_v1 import BaseModel
+from pydantic import BaseModel
 from typing import List
 
-class ElderlyUser:
+class ElderlyUser(BaseModel):
     name: str
     age: int
     location: str
