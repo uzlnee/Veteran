@@ -203,6 +203,7 @@ import { Card, CardContent } from '../components/JobCard.jsx'
 import { Button } from '../components/button'
 import { ScrollArea } from '../components/scroll-area'
 import { format } from 'date-fns'
+import { useNavigate } from 'react-router-dom'
 
 export default function Jobs() {
   const [jobData, setJobData] = useState([])
@@ -210,6 +211,7 @@ export default function Jobs() {
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
   const [sortOrder, setSortOrder] = useState('desc')
+  const navigate = useNavigate()
 
   useEffect(() => {
     const filenames = [
@@ -319,7 +321,13 @@ export default function Jobs() {
                       ))}
                     </ul>
                     <div className="mt-4 text-right">
-                      <Button variant="outline" size="sm">자세히 보기</Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => navigate(`/jobs/${encodeURIComponent(name)}`)}
+                      >
+                        자세히 보기
+                      </Button>
                     </div>
                   </CardContent>
                 </Card>
