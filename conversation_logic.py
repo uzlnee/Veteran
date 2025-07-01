@@ -1,5 +1,4 @@
-import time
-import asyncio # asyncio 임포트 추가
+import asyncio
 from schemas.ConversationState import ConversationState
 from schemas.ValidationResponse import ValidationResponse
 from schemas.ElderlyUser import ElderlyUser

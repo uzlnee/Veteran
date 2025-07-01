@@ -2,7 +2,7 @@ import httpx
 import os
 import asyncio
 import time
-from dotenv import load_dotenv # .env 파일 로드를 위해 추가
+from dotenv import load_dotenv
 
 load_dotenv() # 환경 변수 로드
 
