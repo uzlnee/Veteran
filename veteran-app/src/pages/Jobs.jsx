@@ -138,59 +138,196 @@
 //   );
 // }
 
-import React, { useEffect, useState } from "react";
-import "tailwindcss/tailwind.css";
+// import React, { useEffect, useState } from "react";
+// import "tailwindcss/tailwind.css";
 
-const Jobs = () => {
-  const [recommendations, setRecommendations] = useState([]);
+// const Jobs = () => {
+//   const [recommendations, setRecommendations] = useState([]);
+
+//   useEffect(() => {
+//     // 로컬 서버에서 추천 JSON 파일 목록을 가져옴
+//     fetch("http://localhost:5050/api/recommendations")
+//       .then((res) => res.json())
+//       .then((data) => {
+//         const allRecs = [];
+
+//         Promise.all(
+//           data.map((filename) =>
+//             fetch(`http://localhost:5050/api/recommendations/${filename}`)
+//               .then((res) => res.json())
+//               .then((json) => allRecs.push(json))
+//           )
+//         ).then(() => setRecommendations(allRecs));
+//       })
+//       .catch((err) => console.error("추천 파일 로딩 오류:", err));
+//   }, []);
+
+//   return (
+//     <div className="font-pre min-h-screen bg-gray-50 p-6">
+//       <h2 className="text-2xl font-bold text-blue-800 mb-6">👥 사용자별 일자리 추천</h2>
+//       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+//         {recommendations.map((rec, idx) => (
+//           <div
+//             key={idx}
+//             className="bg-white p-6 rounded-lg shadow-md border border-gray-200"
+//           >
+//             <h3 className="text-xl font-semibold text-blue-600 mb-2">
+//               {rec.name} 님의 추천 직무
+//             </h3>
+//             <div className="space-y-4">
+//               {rec.recommendations.map((item, index) => (
+//                 <div key={index} className="border rounded p-4 bg-gray-50">
+//                   <h4 className="font-bold text-gray-800">{item.occupation}</h4>
+//                   <ul className="list-disc ml-5 mt-2 text-sm text-gray-700 space-y-1">
+//                     {item.jobPostings.map((job, i) => (
+//                       <li key={i}>{job}</li>
+//                     ))}
+//                   </ul>
+//                 </div>
+//               ))}
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// };
+// export default Jobs;
+
+// 새로운 프론트엔드
+// src/pages/Jobs.jsx
+/* eslint-disable no-undef */
+
+import React, { useEffect, useState } from 'react'
+import { Card, CardContent } from '../components/JobCard.jsx'
+import { Button } from '../components/button'
+import { ScrollArea } from '../components/scroll-area'
+import { format } from 'date-fns'
+
+export default function Jobs() {
+  const [jobData, setJobData] = useState([])
+  const [searchTerm, setSearchTerm] = useState('')
+  const [startDate, setStartDate] = useState('')
+  const [endDate, setEndDate] = useState('')
+  const [sortOrder, setSortOrder] = useState('desc')
 
   useEffect(() => {
-    // 로컬 서버에서 추천 JSON 파일 목록을 가져옴
-    fetch("http://localhost:5050/api/recommendations")
-      .then((res) => res.json())
-      .then((data) => {
-        const allRecs = [];
+    const filenames = [
+      '김구인_20250627.json',
+      '김승일_20250627.json',
+      '김옥자_20250515.json',
+      '김옥희_20250515.json',
+      '박춘배_20250515.json',
+      '유영희_20250629.json',
+      '박춘배_20250627.json',
+      '이순희_20250515.json'
+    ]
 
-        Promise.all(
-          data.map((filename) =>
-            fetch(`http://localhost:5050/api/recommendations/${filename}`)
-              .then((res) => res.json())
-              .then((json) => allRecs.push(json))
-          )
-        ).then(() => setRecommendations(allRecs));
-      })
-      .catch((err) => console.error("추천 파일 로딩 오류:", err));
-  }, []);
+    const fetchData = async () => {
+      const allData = await Promise.all(
+        filenames.map(name =>
+          fetch(`/data/${name}`).then(res => res.json())
+        )
+      )
+
+      const parsed = allData.map(file => ({
+        name: file.jobSeeker?.name,
+        created: new Date(file.generatedAt.split('T')[0]),
+        recommendations: file.recommendations || []
+      }))
+
+      setJobData(parsed)
+    }
+
+    fetchData()
+  }, [])
+
+  const filteredData = jobData
+    .filter(d => {
+      const nameMatch = d.name.toLowerCase().includes(searchTerm.toLowerCase())
+      const createdTime = new Date(d.created).getTime()
+      const startOk = startDate ? createdTime >= new Date(startDate).getTime() : true
+      const endOk = endDate ? createdTime <= new Date(endDate).getTime() : true
+      return nameMatch && startOk && endOk
+    })
+    .sort((a, b) => {
+      return sortOrder === 'asc' ? a.created - b.created : b.created - a.created
+    })
 
   return (
-    <div className="font-pre min-h-screen bg-gray-50 p-6">
-      <h2 className="text-2xl font-bold text-blue-800 mb-6">👥 사용자별 일자리 추천</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-        {recommendations.map((rec, idx) => (
-          <div
-            key={idx}
-            className="bg-white p-6 rounded-lg shadow-md border border-gray-200"
-          >
-            <h3 className="text-xl font-semibold text-blue-600 mb-2">
-              {rec.name} 님의 추천 직무
-            </h3>
-            <div className="space-y-4">
-              {rec.recommendations.map((item, index) => (
-                <div key={index} className="border rounded p-4 bg-gray-50">
-                  <h4 className="font-bold text-gray-800">{item.occupation}</h4>
-                  <ul className="list-disc ml-5 mt-2 text-sm text-gray-700 space-y-1">
-                    {item.jobPostings.map((job, i) => (
-                      <li key={i}>{job}</li>
-                    ))}
-                  </ul>
-                </div>
+    <div className="flex flex-col h-screen">
+      {/* 상단 파란 헤더 바 */}
+      <header className="bg-blue-600 text-white p-4 shadow-md">
+        <h1 className="text-xl font-bold">추천 일자리 목록</h1>
+      </header>
+
+      {/* 검색창 */}
+      <div className="bg-white px-6 py-4 shadow-sm border-b flex flex-col md:flex-row flex-wrap gap-4 items-start md:items-center">
+        <input
+          type="text"
+          placeholder="이름으로 검색..."
+          value={searchTerm}
+          onChange={e => setSearchTerm(e.target.value)}
+          className="w-full md:w-60 px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+        <div className="flex items-center gap-2">
+          <input
+            type="date"
+            value={startDate}
+            onChange={e => setStartDate(e.target.value)}
+            className="w-full md:w-48 px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+          <span className="text-gray-500">~</span>
+          <input
+            type="date"
+            value={endDate}
+            onChange={e => setEndDate(e.target.value)}
+            className="w-full md:w-48 px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
+        <select
+          value={sortOrder}
+          onChange={e => setSortOrder(e.target.value)}
+          className="w-full md:w-40 px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+        >
+          <option value="desc">최신순</option>
+          <option value="asc">오래된순</option>
+        </select>
+      </div>
+
+      {/* 본문 컨텐츠 */}
+      <main className="flex-1 overflow-y-auto p-6 bg-gray-50">
+        <ScrollArea className="h-full pr-2">
+          {filteredData.length === 0 ? (
+            <div className="text-center text-gray-500 mt-20 text-lg">
+              검색 결과가 없습니다.
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+              {filteredData.map(({ name, created, recommendations }, idx) => (
+                <Card key={idx} className="hover:shadow-xl transition-shadow">
+                  <CardContent className="p-4">
+                    <div className="text-sm text-gray-500">
+                      생성일: {format(created, 'yyyy-MM-dd')}
+                    </div>
+                    <h2 className="text-xl font-semibold mt-2">{name}님을 위한 추천</h2>
+                    <ul className="mt-2 list-disc pl-4 text-sm text-gray-700">
+                      {recommendations.slice(0, 3).map((rec, i) => (
+                        <li key={i}>
+                          <span className="font-medium">{rec.jobPosting?.title}</span> - {rec.jobPosting?.company}
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="mt-4 text-right">
+                      <Button variant="outline" size="sm">자세히 보기</Button>
+                    </div>
+                  </CardContent>
+                </Card>
               ))}
             </div>
-          </div>
-        ))}
-      </div>
+          )}
+        </ScrollArea>
+      </main>
     </div>
-  );
-};
-
-export default Jobs;
+  )
+}
