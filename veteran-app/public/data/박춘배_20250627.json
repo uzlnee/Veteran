@@ -1,0 +1,78 @@
+{
+  "generatedAt": "2025-06-27T04:02:07.635858",
+  "jobSeeker": {
+    "name": "박춘배",
+    "age": 80,
+    "location": "대전광역시 북구",
+    "availableTime": "하루에 4시간 정도 오전에",
+    "licenses": [],
+    "preferredFields": [
+      "포장, 제조업"
+    ],
+    "healthCondition": "특별히 앞은 곳 없음",
+    "career": "택배 상하차",
+    "education": "초등학교 졸업"
+  },
+  "recommendations": [
+    {
+      "rank": 1,
+      "unifiedScore": 0,
+      "reason": "AI 추천",
+      "jobPosting": {
+        "title": "단구신성미소지움아파트 미화원 채용 (복지카드 소지자 우대)",
+        "company": "(주) 조현시스템",
+        "address": "13504 경기도 성남시 분당구 매화로 42, 401호 (야탑동, 충무빌딩)",
+        "distanceKm": 121.4,
+        "details": "-"
+      }
+    },
+    {
+      "rank": 2,
+      "unifiedScore": 0,
+      "reason": "AI 추천",
+      "jobPosting": {
+        "title": "옥정 LH엘리프 아파트 미화",
+        "company": "(주)두원에이앤씨",
+        "address": "07281 서울특별시 영등포구 선유로9길 10 (문래동6가, 문래 SK V1 center)",
+        "distanceKm": 141.0,
+        "details": "-"
+      }
+    },
+    {
+      "rank": 3,
+      "unifiedScore": 0,
+      "reason": "AI 추천",
+      "jobPosting": {
+        "title": "7/1 근무 가능자 [청량리역 한양수자인그라시엘] 외곽미화원 1명 채용 (월-금 8:30-15:00/ 토(격주)8:30-11:30 1,503,700원) 장애인복지카드 우대",
+        "company": "(주)두원에이앤씨",
+        "address": "07281 서울특별시 영등포구 선유로9길 10 (문래동6가, 문래 SK V1 center)",
+        "distanceKm": 141.0,
+        "details": "-"
+      }
+    },
+    {
+      "rank": 4,
+      "unifiedScore": 0,
+      "reason": "AI 추천",
+      "jobPosting": {
+        "title": "[진접읍] 진접해밀마을신안인스빌아파트 실내 미화원 구인",
+        "company": "주식회사에코그린티엠",
+        "address": "07591 서울특별시 강서구 공항대로 325, 7층 (등촌동, 에이스빌딩)",
+        "distanceKm": 144.9,
+        "details": "-"
+      }
+    },
+    {
+      "rank": 5,
+      "unifiedScore": 0,
+      "reason": "AI 추천",
+      "jobPosting": {
+        "title": "지축동 LH 4단지 미화원 모집",
+        "company": "주식회사에코그린티엠",
+        "address": "07591 서울특별시 강서구 공항대로 325, 7층 (등촌동, 에이스빌딩)",
+        "distanceKm": 144.9,
+        "details": "-"
+      }
+    }
+  ]
+}
