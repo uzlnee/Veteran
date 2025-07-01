@@ -257,12 +257,11 @@ export default function Jobs() {
     })
 
   return (
-    <div className="flex flex-col h-screen">
-      {/* 상단 파란 헤더 바 */}
-      <header className="bg-blue-600 text-white p-4 shadow-md">
-        <h1 className="text-xl font-bold">추천 일자리 목록</h1>
-      </header>
-
+    <div className="flex flex-col min-h-screen bg-gray-50 font-pre">
+      {/* 상단 파란 헤더 (다른 페이지와 동일) */}
+      <div className="bg-blue-500 px-6 py-4">
+        <h2 className="text-xl font-semibold text-white tracking-widest">JOBS</h2>
+      </div>
       {/* 검색창 */}
       <div className="bg-white px-6 py-4 shadow-sm border-b flex flex-col md:flex-row flex-wrap gap-4 items-start md:items-center">
         <input
@@ -296,7 +295,6 @@ export default function Jobs() {
           <option value="asc">오래된순</option>
         </select>
       </div>
-
       {/* 본문 컨텐츠 */}
       <main className="flex-1 overflow-y-auto p-6 bg-gray-50">
         <ScrollArea className="h-full pr-2">
