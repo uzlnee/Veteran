@@ -18,7 +18,7 @@ export default function JobDetail() {
         setData(json)
       } catch {
         setData(null)
-      }
+    }
     }
     fetchData()
   }, [filename])

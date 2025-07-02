@@ -21,20 +21,13 @@ const History = () => {
 
   // 세션 목록 불러오기
   useEffect(() => {
-    const cachedSessions = localStorage.getItem("sessionList");
-    if (cachedSessions) {
-      const parsed = JSON.parse(cachedSessions);
-      setSessions(parsed);
-    } else {
-      fetch("/api/sessions")
-        .then((res) => res.json())
-        .then((data) => {
-          if (!Array.isArray(data)) throw new Error("Invalid sessions data");
-          setSessions(data);
-          localStorage.setItem("sessionList", JSON.stringify(data));
-        })
-        .catch((err) => console.error("세션 목록 불러오기 오류:", err));
-    }
+    fetch("/api/sessions")
+      .then((res) => res.json())
+      .then((data) => {
+        if (!Array.isArray(data)) throw new Error("Invalid sessions data");
+        setSessions(data);
+      })
+      .catch((err) => console.error("세션 목록 불러오기 오류:", err));
   }, []);
 
   // 각 세션의 메타데이터 미리 불러오기 (이름, 나이, 매칭여부 등)
@@ -173,38 +166,38 @@ const History = () => {
         <div className="bg-white rounded shadow-md p-6 w-full border">
           <h3 className="text-base font-semibold mb-4">상담 내역</h3>
           <div className="overflow-y-auto max-h-[400px]">
-            <table className="min-w-full text-sm border">
-              <thead>
-                <tr className="bg-gray-100">
-                  <th className="border px-4 py-2">내역 ID</th>
-                  <th className="border px-4 py-2">상담일자</th>
-                  <th className="border px-4 py-2">상담시간</th>
-                  <th className="border px-4 py-2">이름</th>
-                  <th className="border px-4 py-2">나이</th>
-                  <th className="border px-4 py-2">매칭 여부</th>
+          <table className="min-w-full text-sm border">
+            <thead>
+              <tr className="bg-gray-100">
+                <th className="border px-4 py-2">내역 ID</th>
+                <th className="border px-4 py-2">상담일자</th>
+                <th className="border px-4 py-2">상담시간</th>
+                <th className="border px-4 py-2">이름</th>
+                <th className="border px-4 py-2">나이</th>
+                <th className="border px-4 py-2">매칭 여부</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tableRows.map((row) => (
+                <tr key={row.session} className="hover:bg-blue-50">
+                  <td className="border px-4 py-2 text-blue-700 underline cursor-pointer" onClick={() => handleSessionSelect(row.session)}>{row.id}</td>
+                  <td className="border px-4 py-2">{row.date}</td>
+                  <td className="border px-4 py-2">{row.time}</td>
+                  <td className="border px-4 py-2">{row.name}</td>
+                  <td className="border px-4 py-2">{row.age}</td>
+                  <td className="border px-4 py-2">
+                    {row.matched === null ? (
+                      <span className="inline-block px-3 py-1 rounded bg-gray-200 text-gray-600">-</span>
+                    ) : row.matched ? (
+                      <span className="inline-block px-3 py-1 rounded bg-green-200 text-green-700 font-semibold">Yes</span>
+                    ) : (
+                      <span className="inline-block px-3 py-1 rounded bg-red-200 text-red-700 font-semibold">No</span>
+                    )}
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {tableRows.map((row) => (
-                  <tr key={row.session} className="hover:bg-blue-50">
-                    <td className="border px-4 py-2 text-blue-700 underline cursor-pointer" onClick={() => handleSessionSelect(row.session)}>{row.id}</td>
-                    <td className="border px-4 py-2">{row.date}</td>
-                    <td className="border px-4 py-2">{row.time}</td>
-                    <td className="border px-4 py-2">{row.name}</td>
-                    <td className="border px-4 py-2">{row.age}</td>
-                    <td className="border px-4 py-2">
-                      {row.matched === null ? (
-                        <span className="inline-block px-3 py-1 rounded bg-gray-200 text-gray-600">-</span>
-                      ) : row.matched ? (
-                        <span className="inline-block px-3 py-1 rounded bg-green-200 text-green-700 font-semibold">Yes</span>
-                      ) : (
-                        <span className="inline-block px-3 py-1 rounded bg-red-200 text-red-700 font-semibold">No</span>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+              ))}
+            </tbody>
+          </table>
           </div>
         </div>
 
@@ -224,7 +217,7 @@ const History = () => {
                         <tr><td className="font-semibold text-gray-700 py-2 pr-4">자격증</td><td className="py-2">{userData.license}</td></tr>
                         <tr><td className="font-semibold text-gray-700 py-2 pr-4">희망분야</td><td className="py-2">{userData.preferred_field}</td></tr>
                         <tr><td className="font-semibold text-gray-700 py-2 pr-4">건강상태</td><td className="py-2">{userData.health_condition}</td></tr>
-                        <tr><td className="font-semibold text-gray-700 py-2 pr-4">경력</td><td className="py-2">{userData.carrer}</td></tr>
+                        <tr><td className="font-semibold text-gray-700 py-2 pr-4">경력</td><td className="py-2">{userData.career}</td></tr>
                         <tr><td className="font-semibold text-gray-700 py-2 pr-4">학력</td><td className="py-2">{userData.education}</td></tr>
                       </tbody>
                     </table>

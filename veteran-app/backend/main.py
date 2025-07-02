@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 import os
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 from collections import defaultdict, Counter
 import re
 
@@ -30,23 +30,19 @@ def get_total_sessions():
         if os.path.isdir(os.path.join(RECORDINGS_DIR, name))
     ])
 
-# 최근 24시간 상담
+# 최근 24시간 상담 (오늘 날짜 기준, 폴더명 기반)
 def get_recent_sessions():
     count = 0
     today = datetime.now().date()
     for folder in os.listdir(RECORDINGS_DIR):
-        meta_path = os.path.join(RECORDINGS_DIR, folder, "metadata.json")
-        if os.path.exists(meta_path):
-            with open(meta_path, encoding="utf-8") as f:
-                meta = json.load(f)
-                created_at = meta.get("created_at")
-                if created_at:
-                    try:
-                        created_date = datetime.strptime(created_at, "%Y-%m-%d").date()
-                        if created_date == today:
-                            count += 1
-                    except:
-                        continue
+        try:
+            # 폴더명에서 날짜 추출 (예: 250703_170502)
+            date_str = folder[:6]  # YYMMDD
+            folder_date = datetime.strptime(date_str, "%y%m%d").date()
+            if folder_date == today:
+                count += 1
+        except:
+            continue
     return count
 
 # 매칭 성공률
@@ -63,25 +59,20 @@ def get_match_success_rate():
                     success += 1
     return round((success / total) * 100, 1) if total > 0 else 0.0
 
-# 신규 사용자 수 (오늘 생성된 user_id 수)
+# 최근 7일(오늘 포함) 신규 상담 수 (폴더명 기반)
 def get_new_users_today():
     today = datetime.now().date()
-    user_ids = set()
+    start_date = today - timedelta(days=6)
+    count = 0
     for folder in os.listdir(RECORDINGS_DIR):
-        meta_path = os.path.join(RECORDINGS_DIR, folder, "metadata.json")
-        if os.path.exists(meta_path):
-            with open(meta_path, encoding="utf-8") as f:
-                meta = json.load(f)
-                created_at = meta.get("created_at")
-                user_id = meta.get("user_id")
-                if created_at and user_id:
-                    try:
-                        created_date = datetime.strptime(created_at, "%Y-%m-%d").date()
-                        if created_date == today:
-                            user_ids.add(user_id)
-                    except:
-                        continue
-    return len(user_ids)
+        try:
+            date_str = folder[:6]  # YYMMDD
+            folder_date = datetime.strptime(date_str, "%y%m%d").date()
+            if start_date <= folder_date <= today:
+                count += 1
+        except:
+            continue
+    return count
 
 def get_weekly_session_counts():
     weekly = defaultdict(int)
@@ -173,12 +164,12 @@ def get_summary():
             with open(meta_path, encoding="utf-8") as f:
                 meta = json.load(f)
             if "age" in meta: ages.append(meta["age"])
-            if "location" in meta:
-                loc = str(meta["location"]).strip()
+            if "location_tag" in meta:
+                loc = str(meta["location_tag"]).strip()
                 loc_main = loc.split()[0] if loc else loc
                 locations.append(loc_main)
-            if "preferred_field" in meta:
-                pf = meta["preferred_field"]
+            if "preferred_field_tag" in meta:
+                pf = meta["preferred_field_tag"]
                 if isinstance(pf, list):
                     fields.extend(pf)
                 else:
