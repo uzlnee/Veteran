@@ -1,0 +1,16 @@
+{
+  "name": "박동수",
+  "age": 75,
+  "location": "부산 해운대구",
+  "available_time": "평일 오전 7시부터 오후 3시까지",
+  "license": [
+    "경비원 신임교육 이수증"
+  ],
+  "preferred_field": [
+    "아파트 경비",
+    "시설관리"
+  ],
+  "health_condition": "건강함",
+  "career": "아파트 경비원 12년 근무",
+  "education": "초등학교 졸업"
+}

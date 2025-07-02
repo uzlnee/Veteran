@@ -1,0 +1,13 @@
+{
+  "name": "정미숙",
+  "age": 70,
+  "location": "인천 중구",
+  "available_time": "평일 오전 8시부터 12시까지",
+  "license": [],
+  "preferred_field": [
+    "건물 청소"
+  ],
+  "health_condition": "양호",
+  "career": "무경력",
+  "education": "중학교 졸업"
+}

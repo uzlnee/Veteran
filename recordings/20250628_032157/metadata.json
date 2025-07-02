@@ -1,0 +1,16 @@
+{
+  "name": "이정화",
+  "age": 67,
+  "location": "부산 중구",
+  "available_time": "평일 오전 9시에서 오후 5시",
+  "license": [
+    "사회복지사 2급"
+  ],
+  "preferred_field": [
+    "장애인 활동지원",
+    "복지 관련 업무"
+  ],
+  "health_condition": "특이사항 없음",
+  "career": "복지센터에서 활동지원으로 4년",
+  "education": "전문대학교 졸업"
+}

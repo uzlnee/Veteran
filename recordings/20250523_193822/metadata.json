@@ -1,0 +1,13 @@
+{
+  "name": "박순자",
+  "age": 71,
+  "location": "경기도 성남시 분당구",
+  "available_time": "월요일부터 금요일, 오전 9시부터 오후 4시",
+  "license": [],
+  "preferred_field": [
+    "아파트 미화"
+  ],
+  "health_condition": "허리가 조금 아파요",
+  "career": "다른 아파트에서 미화원으로 5년 일했습니다",
+  "education": "초등학교 졸업"
+}

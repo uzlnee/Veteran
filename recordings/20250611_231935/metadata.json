@@ -1,0 +1,16 @@
+{
+  "name": "김정자",
+  "age": 72,
+  "location": "경기도 김포시",
+  "available_time": "평일 오전 8시부터 오후 3시까지",
+  "license": [
+    "청소관리사"
+  ],
+  "preferred_field": [
+    "아파트 미화",
+    "청소"
+  ],
+  "health_condition": "허리에 통증이 조금 있음",
+  "career": "아파트 미화원 6년 근무",
+  "education": "중학교 졸업"
+}

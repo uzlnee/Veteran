@@ -1,0 +1,16 @@
+{
+  "name": "김성진",
+  "age": 66,
+  "location": "인천 계양구",
+  "available_time": "월요일부터 토요일, 오전 8시부터 오후 4시",
+  "license": [
+    "경비지도사 2급"
+  ],
+  "preferred_field": [
+    "경비",
+    "보안 관련 직종"
+  ],
+  "health_condition": "없음",
+  "career": "빌딩에서 10년간 경비로 근무",
+  "education": "중학교 졸업"
+}

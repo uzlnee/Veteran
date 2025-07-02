@@ -1,0 +1,14 @@
+{
+  "name": "박순옥",
+  "age": 75,
+  "location": "경기도 양평군",
+  "available_time": "월요일부터 금요일까지, 오전 8시부터 오후 3시까지",
+  "license": [],
+  "preferred_field": [
+    "연수원 미화",
+    "건물 미화"
+  ],
+  "health_condition": "허리가 가끔 쑤심",
+  "career": "연수원에서 미화원으로 5년 근무",
+  "education": "초등학교 졸업"
+}

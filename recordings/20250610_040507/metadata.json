@@ -1,0 +1,13 @@
+{
+  "name": "최영호",
+  "age": 68,
+  "location": "경기도 이천시",
+  "available_time": "평일 오전 8시부터 오후 3시까지",
+  "license": [],
+  "preferred_field": [
+    "아파트 실내 청소"
+  ],
+  "health_condition": "건강합니다",
+  "career": "없음",
+  "education": "고등학교 졸업"
+}

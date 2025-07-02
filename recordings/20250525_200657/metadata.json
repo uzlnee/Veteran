@@ -1,0 +1,16 @@
+{
+  "name": "조성호",
+  "age": 65,
+  "location": "경기도 용인시 수지구",
+  "available_time": "월~토, 오전 8시에서 오후 5시",
+  "license": [
+    "전기산업기사"
+  ],
+  "preferred_field": [
+    "전기시설 관리",
+    "터널 관리"
+  ],
+  "health_condition": "없음",
+  "career": "전기 설비관리 분야에서 15년간 근무",
+  "education": "전문대학교 졸업"
+}

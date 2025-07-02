@@ -1,0 +1,14 @@
+{
+  "name": "최명희",
+  "age": 70,
+  "location": "인천 연수구",
+  "available_time": "평일 오전 9시에서 오후 5시",
+  "license": [],
+  "preferred_field": [
+    "미화",
+    "청소"
+  ],
+  "health_condition": "허리가 약간 아파요",
+  "career": "학교에서 7년 동안 미화원으로 일함",
+  "education": "고등학교 졸업"
+}

@@ -1,0 +1,13 @@
+{
+  "name": "박현숙",
+  "age": 65,
+  "location": "경기도 남양주시",
+  "available_time": "평일 오전 9시부터 오후 4시까지",
+  "license": [],
+  "preferred_field": [
+    "아파트 실내 미화"
+  ],
+  "health_condition": "아픈 데 없어요.",
+  "career": "가사도우미로 10년 일했습니다.",
+  "education": "고등학교 졸업"
+}

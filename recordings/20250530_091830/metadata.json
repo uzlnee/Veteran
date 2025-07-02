@@ -1,0 +1,15 @@
+{
+  "name": "오재현",
+  "age": 66,
+  "location": "서울시 강서구",
+  "available_time": "월~토, 오전 8시부터 오후 4시까지",
+  "license": [
+    "경비원 신임교육 이수증"
+  ],
+  "preferred_field": [
+    "아파트 경비"
+  ],
+  "health_condition": "없습니다.",
+  "career": "아파트 경비로 9년간 일했습니다.",
+  "education": "고등학교 졸업"
+}

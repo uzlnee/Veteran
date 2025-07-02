@@ -1,0 +1,13 @@
+{
+  "name": "장순희",
+  "age": 80,
+  "location": "인천 남동구",
+  "available_time": "월요일부터 금요일, 오전 9시부터 오후 3시까지",
+  "license": [],
+  "preferred_field": [
+    "청소일"
+  ],
+  "health_condition": "손목이 좀 저려",
+  "career": "일해본 경험 없음",
+  "education": "중학교 졸업"
+}

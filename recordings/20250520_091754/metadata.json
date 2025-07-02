@@ -1,0 +1,15 @@
+{
+  "name": "강철중",
+  "age": 72,
+  "location": "대구 달서구",
+  "available_time": "교대 근무 가능",
+  "license": [
+    "경비원 신임교육 이수증"
+  ],
+  "preferred_field": [
+    "아파트 경비"
+  ],
+  "health_condition": "건강함",
+  "career": "15년 넘게 아파트 경비원으로 일함",
+  "education": "중학교 졸업"
+}

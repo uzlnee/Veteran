@@ -1,0 +1,16 @@
+{
+  "name": "이기호",
+  "age": 71,
+  "location": "경기도 성남시 분당구",
+  "available_time": "평일 오전 9시부터 오후 6시까지",
+  "license": [
+    "요양보호사 1급"
+  ],
+  "preferred_field": [
+    "요양보호",
+    "복지 관련"
+  ],
+  "health_condition": "특별히 불편한 곳은 없습니다.",
+  "career": "요양보호사로 6년간 근무",
+  "education": "고등학교 졸업"
+}

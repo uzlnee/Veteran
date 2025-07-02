@@ -1,0 +1,13 @@
+{
+  "name": "이명자",
+  "age": 77,
+  "location": "경기도 광명시",
+  "available_time": "평일 오전 7시부터 오후 2시까지",
+  "license": [],
+  "preferred_field": [
+    "아파트 청소"
+  ],
+  "health_condition": "허리가 좀 아파서 오래 서있기는 힘들어",
+  "career": "아파트 미화원으로 10년",
+  "education": "초등학교 졸업"
+}

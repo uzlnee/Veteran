@@ -1,0 +1,14 @@
+{
+  "name": "박정애",
+  "age": 74,
+  "location": "인천 연수구",
+  "available_time": "평일 오전 9시부터 3시까지",
+  "license": [],
+  "preferred_field": [
+    "경비",
+    "단순 업무"
+  ],
+  "health_condition": "무릎 통증이 좀 있어요.",
+  "career": "따로 일해본 경험은 없습니다.",
+  "education": "초등학교 졸업"
+}

@@ -1,0 +1,16 @@
+{
+  "name": "이종남",
+  "age": 68,
+  "location": "서울 송파구",
+  "available_time": "월~토 오전 10시부터 저녁 7시까지",
+  "license": [
+    "한식조리기능사"
+  ],
+  "preferred_field": [
+    "주방보조",
+    "급식조리"
+  ],
+  "health_condition": "손목이 조금 불편해서 무거운 건 들기 힘듭니다.",
+  "career": "식당 주방에서 5년 일했어요.",
+  "education": "중학교 졸업"
+}

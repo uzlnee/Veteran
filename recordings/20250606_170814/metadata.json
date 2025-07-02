@@ -1,0 +1,16 @@
+{
+  "name": "조명자",
+  "age": 80,
+  "location": "서울 강서구",
+  "available_time": "월요일부터 금요일, 오전 8시에서 오후 2시",
+  "license": [
+    "청소관리사"
+  ],
+  "preferred_field": [
+    "아파트 미화",
+    "환경미화"
+  ],
+  "health_condition": "허리가 조금 안 좋아요",
+  "career": "아파트 미화원으로 12년 동안 일했습니다",
+  "education": "고등학교 졸업"
+}

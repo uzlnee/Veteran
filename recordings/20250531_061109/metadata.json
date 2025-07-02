@@ -1,0 +1,17 @@
+{
+  "name": "김동환",
+  "age": 65,
+  "location": "경남 양산시 동면",
+  "available_time": "월요일부터 토요일, 오전 7시부터 오후 4시",
+  "license": [
+    "1종 대형운전면허",
+    "화물운송종사자격증"
+  ],
+  "preferred_field": [
+    "트럭 운전",
+    "운송"
+  ],
+  "health_condition": "없음",
+  "career": "화물 운전기사 15년",
+  "education": "고등학교 졸업"
+}

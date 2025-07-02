@@ -1,0 +1,16 @@
+{
+  "name": "김영자",
+  "age": 73,
+  "location": "강원특별자치도 강릉시",
+  "available_time": "월요일부터 금요일, 오전 8시에서 오후 4시",
+  "license": [
+    "사회복지사 2급"
+  ],
+  "preferred_field": [
+    "복지시설 보조",
+    "생활재활교사"
+  ],
+  "health_condition": "딱히 없음",
+  "career": "지역 복지관에서 생활지도원으로 8년 정도 근무",
+  "education": "고등학교 졸업"
+}

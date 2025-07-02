@@ -1,0 +1,13 @@
+{
+  "name": "오미자",
+  "age": 73,
+  "location": "군포 산본동",
+  "available_time": "평일 오전",
+  "license": [],
+  "preferred_field": [
+    "아파트 내부 미화원"
+  ],
+  "health_condition": "무릎이 좋지 않습니다.",
+  "career": "다른 아파트에서 미화원으로 3년 일한 경험 있습니다.",
+  "education": "초등학교 졸업"
+}

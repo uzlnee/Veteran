@@ -1,0 +1,16 @@
+{
+  "name": "장순자",
+  "age": 76,
+  "location": "인천 미추홀구",
+  "available_time": "월요일에서 금요일, 오전 8시부터 오후 2시까지",
+  "license": [
+    "조리사"
+  ],
+  "preferred_field": [
+    "급식",
+    "조리보조"
+  ],
+  "health_condition": "건강해요",
+  "career": "학교 급식실에서 조리보조로 9년 일했습니다.",
+  "education": "중학교 졸업"
+}

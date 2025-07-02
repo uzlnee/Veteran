@@ -1,0 +1,15 @@
+{
+  "name": "강민호",
+  "age": 73,
+  "location": "서울 도봉구 도봉동",
+  "available_time": "교대 근무 가능",
+  "license": [
+    "경비원 신임교육 이수증"
+  ],
+  "preferred_field": [
+    "아파트 경비원"
+  ],
+  "health_condition": "없음",
+  "career": "다른 아파트에서 7년간 경비원으로 근무했습니다.",
+  "education": "고등학교 졸업"
+}

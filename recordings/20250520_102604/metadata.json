@@ -1,0 +1,14 @@
+{
+  "name": "이순애",
+  "age": 67,
+  "location": "서울 강남구",
+  "available_time": "월요일부터 토요일, 오전 10시부터 오후 5시까지",
+  "license": [],
+  "preferred_field": [
+    "병원 청소",
+    "세탁일"
+  ],
+  "health_condition": "손목이 좀 약해요",
+  "career": "세탁소에서 10년",
+  "education": "중학교 졸업"
+}

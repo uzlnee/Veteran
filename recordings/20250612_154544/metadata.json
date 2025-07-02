@@ -1,0 +1,16 @@
+{
+  "name": "김형진",
+  "age": 68,
+  "location": "서울시 노원구",
+  "available_time": "평일 오전 9시부터 오후 6시",
+  "license": [
+    "컴퓨터활용능력 2급"
+  ],
+  "preferred_field": [
+    "사무행정",
+    "성과관리"
+  ],
+  "health_condition": "건강합니다",
+  "career": "공공기관에서 사무직으로 12년간 근무",
+  "education": "4년제 대학교 졸업"
+}

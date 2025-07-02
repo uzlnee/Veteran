@@ -1,0 +1,16 @@
+{
+  "name": "이현우",
+  "age": 61,
+  "location": "충청남도 계룡시",
+  "available_time": "풀타임 근무 가능",
+  "license": [
+    "사회복지사 1급",
+    "운전면허 1종 보통"
+  ],
+  "preferred_field": [
+    "사회복지사"
+  ],
+  "health_condition": "특이사항 없음",
+  "career": "공무원 은퇴 후 사회복지 분야 2년간 봉사활동",
+  "education": "대학교 졸업 (행정학 전공)"
+}

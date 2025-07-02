@@ -1,0 +1,16 @@
+{
+  "name": "박서준",
+  "age": 65,
+  "location": "서울시 도봉구",
+  "available_time": "월~금, 9시부터 5시까지",
+  "license": [
+    "2급 정사서 자격증"
+  ],
+  "preferred_field": [
+    "도서관 사서",
+    "자료 정리"
+  ],
+  "health_condition": "건강합니다.",
+  "career": "구립 도서관에서 20년간 사서로 근무했습니다.",
+  "education": "4년제 대학교 문헌정보학과 졸업"
+}

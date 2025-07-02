@@ -1,0 +1,16 @@
+{
+  "name": "이도현",
+  "age": 71,
+  "location": "충청남도 천안시 동남구",
+  "available_time": "평일 오전 8시부터 오후 5시까지",
+  "license": [
+    "경비원 신임교육 이수증"
+  ],
+  "preferred_field": [
+    "경비",
+    "시설관리"
+  ],
+  "health_condition": "없습니다",
+  "career": "공장에서 경비원으로 8년 일했습니다.",
+  "education": "고등학교 졸업"
+}

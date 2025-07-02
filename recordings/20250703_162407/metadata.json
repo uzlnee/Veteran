@@ -1,0 +1,14 @@
+{
+  "name": "김영수",
+  "age": 69,
+  "location": "경기도 화성시",
+  "available_time": "월~금, 오전 8시에서 오후 5시까지",
+  "license": [],
+  "preferred_field": [
+    "청소",
+    "환경미화"
+  ],
+  "health_condition": "다리가 좀 저려요",
+  "career": "공장에서 미화원으로 6년 일했지",
+  "education": "중학교 졸업"
+}

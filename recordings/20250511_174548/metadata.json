@@ -1,0 +1,14 @@
+{
+  "name": "정영숙",
+  "age": 78,
+  "location": "강원도 강릉시",
+  "available_time": "평일 오전 9시부터 오후 3시까지",
+  "license": [],
+  "preferred_field": [
+    "복지시설 보조",
+    "간단한 행정지원"
+  ],
+  "health_condition": "다리가 좀 저려요",
+  "career": "경력 없음",
+  "education": "초등학교 졸업"
+}

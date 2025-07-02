@@ -1,0 +1,15 @@
+{
+  "name": "조은희",
+  "age": 75,
+  "location": "대구 동구",
+  "available_time": "평일 오전 9시부터 오후 6시까지",
+  "license": [
+    "요양보호사 1급"
+  ],
+  "preferred_field": [
+    "재가요양보호사"
+  ],
+  "health_condition": "건강합니다.",
+  "career": "요양보호사로 5년간 근무한 경험이 있습니다.",
+  "education": "고등학교 졸업"
+}

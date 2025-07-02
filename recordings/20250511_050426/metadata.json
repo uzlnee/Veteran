@@ -1,0 +1,14 @@
+{
+  "name": "김순자",
+  "age": 69,
+  "location": "서울 동대문구",
+  "available_time": "월요일부터 토요일까지 오전 시간대",
+  "license": [],
+  "preferred_field": [
+    "미화",
+    "청소"
+  ],
+  "health_condition": "오래 서 있으면 다리가 조금 아파요.",
+  "career": "식당에서 청소 아르바이트를 몇 년 했습니다.",
+  "education": "초등학교 졸업"
+}

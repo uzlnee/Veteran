@@ -1,0 +1,15 @@
+{
+  "name": "최경호",
+  "age": 66,
+  "location": "경기도 용인시 기흥구",
+  "available_time": "교대 근무",
+  "license": [
+    "경비지도사"
+  ],
+  "preferred_field": [
+    "아파트 경비직"
+  ],
+  "health_condition": "특별히 불편한 곳은 없습니다",
+  "career": "다른 아파트 단지에서 5년 정도 경비 반장으로 일했습니다",
+  "education": "전문대학교 졸업"
+}

@@ -1,0 +1,14 @@
+{
+  "name": "이정애",
+  "age": 65,
+  "location": "서울 영등포구",
+  "available_time": "평일 오전 9시부터 5시까지",
+  "license": [],
+  "preferred_field": [
+    "아파트 미화",
+    "청소"
+  ],
+  "health_condition": "손목이 가끔 저려요",
+  "career": "아파트 미화원으로 4년 일했습니다",
+  "education": "중학교 졸업"
+}

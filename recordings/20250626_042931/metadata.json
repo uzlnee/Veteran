@@ -1,0 +1,16 @@
+{
+  "name": "김순희",
+  "age": 74,
+  "location": "경상남도 진주시",
+  "available_time": "월요일에서 금요일, 오전 9시부터 오후 6시까지",
+  "license": [
+    "요양보호사 1급"
+  ],
+  "preferred_field": [
+    "요양보호",
+    "복지"
+  ],
+  "health_condition": "딱히 아픈 데는 없어요.",
+  "career": "요양보호사로 5년",
+  "education": "중학교 졸업"
+}

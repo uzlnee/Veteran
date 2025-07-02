@@ -1,0 +1,16 @@
+{
+  "name": "박상철",
+  "age": 70,
+  "location": "김포 양촌읍",
+  "available_time": "월요일부터 토요일, 오전 8시부터 오후 4시까지",
+  "license": [
+    "청소관리사"
+  ],
+  "preferred_field": [
+    "아파트 미화",
+    "실내 청소"
+  ],
+  "health_condition": "건강합니다",
+  "career": "아파트에서 미화원으로 7년 일했습니다",
+  "education": "고등학교 졸업"
+}

@@ -1,0 +1,14 @@
+{
+  "name": "손병호",
+  "age": 77,
+  "location": "서울 강서구",
+  "available_time": "월요일부터 토요일, 오전 7시부터 오후 3시",
+  "license": [],
+  "preferred_field": [
+    "아파트 미화",
+    "청소"
+  ],
+  "health_condition": "없음",
+  "career": "",
+  "education": "초등학교 졸업"
+}

@@ -1,0 +1,16 @@
+{
+  "name": "김민준",
+  "age": 68,
+  "location": "전북 익산시",
+  "available_time": "24시간 격일 근무 가능",
+  "license": [
+    "경비원 신임교육 이수증"
+  ],
+  "preferred_field": [
+    "아파트 관리원",
+    "경비"
+  ],
+  "health_condition": "건강합니다",
+  "career": "아파트 관리원으로 10년 일했습니다",
+  "education": "고등학교 졸업"
+}

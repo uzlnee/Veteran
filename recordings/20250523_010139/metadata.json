@@ -1,0 +1,16 @@
+{
+  "name": "이지연",
+  "age": 63,
+  "location": "서울 노원구",
+  "available_time": "월요일부터 금요일까지, 풀타임 근무 가능",
+  "license": [
+    "컴퓨터활용능력 1급"
+  ],
+  "preferred_field": [
+    "학교 행정",
+    "사무 보조"
+  ],
+  "health_condition": "없습니다",
+  "career": "무역회사에서 20년 이상 사무직으로 근무",
+  "education": "4년제 대학에서 영문학을 전공"
+}

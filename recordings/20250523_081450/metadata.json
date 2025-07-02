@@ -1,0 +1,16 @@
+{
+  "name": "김지영",
+  "age": 62,
+  "location": "서울시 노원구",
+  "available_time": "월요일부터 금요일까지, 9시부터 6시까지",
+  "license": [
+    "MOS 마스터"
+  ],
+  "preferred_field": [
+    "학교 행정직",
+    "홍보 관련 업무"
+  ],
+  "health_condition": "없음",
+  "career": "출판사에서 홍보팀장으로 15년간 근무",
+  "education": "대학교 졸업"
+}

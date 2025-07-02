@@ -1,0 +1,14 @@
+{
+  "name": "오영희",
+  "age": 80,
+  "location": "경기도 용인시 기흥구",
+  "available_time": "평일 오전에만 일하고 싶어요. 9시에서 1시",
+  "license": [],
+  "preferred_field": [
+    "도서관 책 정리",
+    "간단한 사무보조"
+  ],
+  "health_condition": "눈이 좀 침침해요",
+  "career": "도서관에서 사서보조로 3년 정도 일해봤어요",
+  "education": "전문대학교 졸업"
+}

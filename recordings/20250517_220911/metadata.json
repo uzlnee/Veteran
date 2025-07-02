@@ -1,0 +1,16 @@
+{
+  "name": "박종철",
+  "age": 66,
+  "location": "김포시",
+  "available_time": "월요일부터 금요일, 9시부터 6시까지",
+  "license": [
+    "주택관리사"
+  ],
+  "preferred_field": [
+    "건물 관리",
+    "시설 관리 과장직"
+  ],
+  "health_condition": "없습니다.",
+  "career": "오피스텔 관리소장으로 10년 일했습니다.",
+  "education": "전문대학교 건축설비과 전공"
+}

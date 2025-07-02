@@ -1,0 +1,13 @@
+{
+  "name": "김복순",
+  "age": 69,
+  "location": "경기도 하남시",
+  "available_time": "평일 오전 8시 30분 ~ 오후 3시 30분",
+  "license": [],
+  "preferred_field": [
+    "아파트 실내 청소"
+  ],
+  "health_condition": "무릎이 가끔 시림",
+  "career": "없음",
+  "education": "초등학교 졸업"
+}
