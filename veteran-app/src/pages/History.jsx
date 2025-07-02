@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "tailwindcss/tailwind.css";
 
+// const BASE_URL = "";
+
 const History = () => {
   const [sessions, setSessions] = useState([]);
   const [sessionUserMap, setSessionUserMap] = useState({});
@@ -24,7 +26,7 @@ const History = () => {
       const parsed = JSON.parse(cachedSessions);
       setSessions(parsed);
     } else {
-      fetch("http://localhost:5050/api/sessions")
+      fetch("/api/sessions")
         .then((res) => res.json())
         .then((data) => {
           if (!Array.isArray(data)) throw new Error("Invalid sessions data");
@@ -42,7 +44,7 @@ const History = () => {
       await Promise.all(
         sessions.map(async (s) => {
           try {
-            const res = await fetch(`http://localhost:5050/api/sessions/${s}/metadata`);
+            const res = await fetch(`/api/sessions/${s}/metadata`);
             if (res.ok) {
               const meta = await res.json();
               map[s] = meta;
@@ -62,9 +64,9 @@ const History = () => {
     setShowAudio(false);
     try {
       const [metaRes, transcriptRes, audioRes] = await Promise.all([
-        fetch(`http://localhost:5050/api/sessions/${session}/metadata`),
-        fetch(`http://localhost:5050/api/sessions/${session}/transcript`),
-        fetch(`http://localhost:5050/api/sessions/${session}/audios`),
+        fetch(`/api/sessions/${session}/metadata`),
+        fetch(`/api/sessions/${session}/transcript`),
+        fetch(`/api/sessions/${session}/audios`),
       ]);
       if (metaRes.ok) setUserData(await metaRes.json());
       else setUserData(null);
@@ -84,7 +86,7 @@ const History = () => {
   // 파일 다운로드
   const downloadFile = (filename) => {
     const link = document.createElement("a");
-    link.href = `http://localhost:5050/recordings/${selectedSession}/${filename}`;
+    link.href = `/recordings/${selectedSession}/${filename}`;
     link.download = filename;
     link.click();
   };
@@ -168,40 +170,42 @@ const History = () => {
         </select>
       </div>
       <div className="p-6 flex flex-col gap-6">
-        <div className="bg-white rounded shadow-md p-6 w-full border overflow-x-auto">
+        <div className="bg-white rounded shadow-md p-6 w-full border">
           <h3 className="text-base font-semibold mb-4">상담 내역</h3>
-          <table className="min-w-full text-sm border">
-            <thead>
-              <tr className="bg-gray-100">
-                <th className="border px-4 py-2">내역 ID</th>
-                <th className="border px-4 py-2">상담일자</th>
-                <th className="border px-4 py-2">상담시간</th>
-                <th className="border px-4 py-2">이름</th>
-                <th className="border px-4 py-2">나이</th>
-                <th className="border px-4 py-2">매칭 여부</th>
-              </tr>
-            </thead>
-            <tbody>
-              {tableRows.map((row) => (
-                <tr key={row.session} className="hover:bg-blue-50">
-                  <td className="border px-4 py-2 text-blue-700 underline cursor-pointer" onClick={() => handleSessionSelect(row.session)}>{row.id}</td>
-                  <td className="border px-4 py-2">{row.date}</td>
-                  <td className="border px-4 py-2">{row.time}</td>
-                  <td className="border px-4 py-2">{row.name}</td>
-                  <td className="border px-4 py-2">{row.age}</td>
-                  <td className="border px-4 py-2">
-                    {row.matched === null ? (
-                      <span className="inline-block px-3 py-1 rounded bg-gray-200 text-gray-600">-</span>
-                    ) : row.matched ? (
-                      <span className="inline-block px-3 py-1 rounded bg-green-200 text-green-700 font-semibold">Yes</span>
-                    ) : (
-                      <span className="inline-block px-3 py-1 rounded bg-red-200 text-red-700 font-semibold">No</span>
-                    )}
-                  </td>
+          <div className="overflow-y-auto max-h-[400px]">
+            <table className="min-w-full text-sm border">
+              <thead>
+                <tr className="bg-gray-100">
+                  <th className="border px-4 py-2">내역 ID</th>
+                  <th className="border px-4 py-2">상담일자</th>
+                  <th className="border px-4 py-2">상담시간</th>
+                  <th className="border px-4 py-2">이름</th>
+                  <th className="border px-4 py-2">나이</th>
+                  <th className="border px-4 py-2">매칭 여부</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {tableRows.map((row) => (
+                  <tr key={row.session} className="hover:bg-blue-50">
+                    <td className="border px-4 py-2 text-blue-700 underline cursor-pointer" onClick={() => handleSessionSelect(row.session)}>{row.id}</td>
+                    <td className="border px-4 py-2">{row.date}</td>
+                    <td className="border px-4 py-2">{row.time}</td>
+                    <td className="border px-4 py-2">{row.name}</td>
+                    <td className="border px-4 py-2">{row.age}</td>
+                    <td className="border px-4 py-2">
+                      {row.matched === null ? (
+                        <span className="inline-block px-3 py-1 rounded bg-gray-200 text-gray-600">-</span>
+                      ) : row.matched ? (
+                        <span className="inline-block px-3 py-1 rounded bg-green-200 text-green-700 font-semibold">Yes</span>
+                      ) : (
+                        <span className="inline-block px-3 py-1 rounded bg-red-200 text-red-700 font-semibold">No</span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
 
         {selectedSession && userData && (
@@ -246,7 +250,7 @@ const History = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       {audioFiles.map((f) => (
                         <div key={f}>
-                          <audio controls src={`http://localhost:5050/recordings/${selectedSession}/${f}`} className="w-full" />
+                          <audio controls src={`/recordings/${selectedSession}/${f}`} className="w-full" />
                           <div className="flex justify-between items-center mt-1">
                             <p className="text-sm text-gray-700 truncate mr-2">{f}</p>
                             <button

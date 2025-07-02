@@ -4,33 +4,24 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { Button } from '../components/button'
 
 export default function JobDetail() {
-  const { name } = useParams()
+  const { filename } = useParams()
   const navigate = useNavigate()
   const [data, setData] = useState(null)
   const [expandedIndex, setExpandedIndex] = useState(null)
 
   useEffect(() => {
-    const filenames = [
-      '김구인_20250627.json',
-      '김승일_20250627.json',
-      '김옥자_20250515.json',
-      '김옥희_20250515.json',
-      '박춘배_20250515.json',
-      '유영희_20250629.json',
-      '박춘배_20250627.json',
-      '이순희_20250515.json'
-    ]
-
-    const fetchAll = async () => {
-      const results = await Promise.all(
-        filenames.map(file => fetch(`/data/${file}`).then(res => res.json()))
-      )
-      const matched = results.find(r => r.jobSeeker?.name === name)
-      setData(matched || null)
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`/api/jobs/${filename}`)
+        if (!res.ok) throw new Error("데이터 없음")
+        const json = await res.json()
+        setData(json)
+      } catch {
+        setData(null)
+      }
     }
-
-    fetchAll()
-  }, [name])
+    fetchData()
+  }, [filename])
 
   if (!data) return <div className="p-6">불러오는 중 또는 데이터가 없습니다.</div>
 
@@ -48,7 +39,7 @@ export default function JobDetail() {
         </Button>
       </div>
 
-      <h1 className="text-2xl font-bold mb-2">{data.jobSeeker.name}님의 추천 직업 상세</h1>
+      <h1 className="text-2xl font-bold mb-2">{data.jobSeeker?.name}님의 추천 직업 상세</h1>
       <p className="text-gray-600 mb-4">
         생성일: {new Date(data.generatedAt).toLocaleDateString()}
       </p>
@@ -57,16 +48,16 @@ export default function JobDetail() {
       <div className="bg-white border rounded-lg shadow p-4 mb-6">
         <h2 className="text-lg font-semibold mb-2">기본 정보</h2>
         <ul className="text-sm text-gray-700 space-y-1">
-          <li><strong>나이:</strong> {data.jobSeeker.age}세</li>
-          <li><strong>거주지:</strong> {data.jobSeeker.location}</li>
-          <li><strong>가능 시간:</strong> {data.jobSeeker.available_time || data.jobSeeker.availableTime}</li>
-          <li><strong>자격증:</strong> {(data.jobSeeker.license || data.jobSeeker.licenses)?.join(', ') || '없음'}</li>
-          <li><strong>희망 분야:</strong> {(data.jobSeeker.preferred_field || data.jobSeeker.preferredFields)?.join(', ') || '없음'}</li>
-          <li><strong>건강 상태:</strong> {data.jobSeeker.health_condition || data.jobSeeker.healthCondition}</li>
-          <li><strong>학력:</strong> {data.jobSeeker.education}</li>
-          <li><strong>경력:</strong> {Array.isArray(data.jobSeeker.career)
+          <li><strong>나이:</strong> {data.jobSeeker?.age}세</li>
+          <li><strong>거주지:</strong> {data.jobSeeker?.location}</li>
+          <li><strong>가능 시간:</strong> {data.jobSeeker?.available_time || data.jobSeeker?.availableTime}</li>
+          <li><strong>자격증:</strong> {(data.jobSeeker?.license || data.jobSeeker?.licenses)?.join(', ') || '없음'}</li>
+          <li><strong>희망 분야:</strong> {(data.jobSeeker?.preferred_field || data.jobSeeker?.preferredFields)?.join(', ') || '없음'}</li>
+          <li><strong>건강 상태:</strong> {data.jobSeeker?.health_condition || data.jobSeeker?.healthCondition}</li>
+          <li><strong>학력:</strong> {data.jobSeeker?.education}</li>
+          <li><strong>경력:</strong> {Array.isArray(data.jobSeeker?.career)
             ? data.jobSeeker.career.map(c => `${c.org} (${c.years}년)`).join(', ')
-            : data.jobSeeker.career || '없음'}
+            : data.jobSeeker?.career || '없음'}
           </li>
         </ul>
       </div>

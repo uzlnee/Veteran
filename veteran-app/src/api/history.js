@@ -1,5 +1,5 @@
 // src/api/history.js
-const BASE_URL = "http://localhost:5050/api";
+const BASE_URL = "/api";
 
 /**
  * 전체 세션 리스트 가져오기
