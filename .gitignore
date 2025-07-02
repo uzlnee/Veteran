@@ -1,4 +1,7 @@
 .env
 .venv
 __pycache__
-recordings
+recordings/
+build/
+node_modules/   
+venv/
