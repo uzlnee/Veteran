@@ -12,6 +12,7 @@ const History = () => {
   const [audioFiles, setAudioFiles] = useState([]);
   const [showAudio, setShowAudio] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [jobFilesMap, setJobFilesMap] = useState({});
 
   // 검색/필터/정렬 상태
   const [searchName, setSearchName] = useState("");
@@ -126,6 +127,25 @@ const History = () => {
     }
   });
 
+  useEffect(() => {
+    const fetchJobFiles = async () => {
+      const map = {};
+      await Promise.all(
+        sessions.map(async (s) => {
+          try {
+            const res = await fetch(`/api/sessions/${s}/jobfiles`);
+            if (res.ok) {
+              const files = await res.json();
+              map[s] = files;
+            }
+          } catch {}
+        })
+      );
+      setJobFilesMap(map);
+    };
+    if (sessions.length > 0) fetchJobFiles();
+  }, [sessions]);
+
   return (
     <div className="font-pre min-h-screen bg-gray-50">
       <div className="bg-blue-500 px-6 py-4">
@@ -175,6 +195,7 @@ const History = () => {
                 <th className="border px-4 py-2">이름</th>
                 <th className="border px-4 py-2">나이</th>
                 <th className="border px-4 py-2">매칭 여부</th>
+                <th className="border px-4 py-2">추천공고</th>
               </tr>
             </thead>
             <tbody>
@@ -192,6 +213,20 @@ const History = () => {
                       <span className="inline-block px-3 py-1 rounded bg-green-200 text-green-700 font-semibold">Yes</span>
                     ) : (
                       <span className="inline-block px-3 py-1 rounded bg-red-200 text-red-700 font-semibold">No</span>
+                    )}
+                  </td>
+                  <td className="border px-4 py-2">
+                    {jobFilesMap[row.session] && jobFilesMap[row.session].length > 0 ? (
+                      <a
+                        href={`/jobs/${encodeURIComponent(jobFilesMap[row.session][0])}`}
+                        className="text-blue-600 underline"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        보기
+                      </a>
+                    ) : (
+                      "-"
                     )}
                   </td>
                 </tr>

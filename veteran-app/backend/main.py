@@ -36,12 +36,12 @@ def get_recent_sessions():
     today = datetime.now().date()
     for folder in os.listdir(RECORDINGS_DIR):
         try:
-            # 폴더명에서 날짜 추출 (예: 250703_170502)
-            date_str = folder[:6]  # YYMMDD
-            folder_date = datetime.strptime(date_str, "%y%m%d").date()
+            # 폴더명에서 날짜 추출 (예: 20250703_162407)
+            date_str = folder.split('_')[0]  # YYYYMMDD
+            folder_date = datetime.strptime(date_str, "%Y%m%d").date()
             if folder_date == today:
                 count += 1
-        except:
+        except Exception:
             continue
     return count
 
@@ -55,7 +55,7 @@ def get_match_success_rate():
             with open(meta_path, encoding="utf-8") as f:
                 meta = json.load(f)
                 total += 1
-                if meta.get("matched", False):
+                if meta.get("is_job_seeking", False):
                     success += 1
     return round((success / total) * 100, 1) if total > 0 else 0.0
 
@@ -66,26 +66,29 @@ def get_new_users_today():
     count = 0
     for folder in os.listdir(RECORDINGS_DIR):
         try:
-            date_str = folder[:6]  # YYMMDD
-            folder_date = datetime.strptime(date_str, "%y%m%d").date()
+            date_str = folder.split('_')[0]  # YYYYMMDD
+            folder_date = datetime.strptime(date_str, "%Y%m%d").date()
             if start_date <= folder_date <= today:
                 count += 1
-        except:
+        except Exception:
             continue
     return count
 
 def get_weekly_session_counts():
     weekly = defaultdict(int)
+    today = datetime.now().date()
+    start_date = today - timedelta(days=6)
     for folder in os.listdir(RECORDINGS_DIR):
         try:
-            date_str = folder.split("_")[0]
-            session_date = datetime.strptime(date_str, "%Y%m%d")
-            weekday = session_date.strftime("%a")
-            weekday_kor = {
-                "Mon": "월", "Tue": "화", "Wed": "수",
-                "Thu": "목", "Fri": "금", "Sat": "토", "Sun": "일"
-            }[weekday]
-            weekly[weekday_kor] += 1
+            date_str = folder.split("_")[0]  # YYYYMMDD
+            session_date = datetime.strptime(date_str, "%Y%m%d").date()
+            if start_date <= session_date <= today:
+                weekday = session_date.strftime("%a")  # 'Mon', 'Tue', ...
+                weekday_kor = {
+                    "Mon": "월", "Tue": "화", "Wed": "수",
+                    "Thu": "목", "Fri": "금", "Sat": "토", "Sun": "일"
+                }[weekday]
+                weekly[weekday_kor] += 1
         except:
             continue
     # 요일 순서대로 출력
@@ -316,203 +319,41 @@ app.mount("/recordings", StaticFiles(directory=RECORDINGS_DIR), name="recordings
 @app.get("/api/jobs/files")
 def get_job_files():
     try:
-        files = [
-            f for f in os.listdir(USER_JOBS_DIR)
-            if f.endswith(".json")
-        ]
+        files = []
+        pattern = re.compile(r".+_\d{8}_\d{6}\.json$")
+        for folder in os.listdir(RECORDINGS_DIR):
+            folder_path = os.path.join(RECORDINGS_DIR, folder)
+            if os.path.isdir(folder_path):
+                for f in os.listdir(folder_path):
+                    # 이름_YYYYMMDD_HHMMSS.json 형식만 포함
+                    if f.endswith(".json") and pattern.match(f):
+                        files.append(f)
         return files
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/api/jobs/{filename}")
 def get_job_file(filename: str):
-    path = os.path.join(USER_JOBS_DIR, filename)
-    if not os.path.exists(path):
+    try:
+        for folder in os.listdir(RECORDINGS_DIR):
+            folder_path = os.path.join(RECORDINGS_DIR, folder)
+            if os.path.isdir(folder_path):
+                file_path = os.path.join(folder_path, filename)
+                if os.path.exists(file_path):
+                    with open(file_path, encoding="utf-8") as f:
+                        return json.load(f)
         raise HTTPException(status_code=404, detail="File not found")
-    with open(path, encoding="utf-8") as f:
-        return json.load(f)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
-# def list_session_folders():
-#     return [
-#         name for name in os.listdir(RECORDINGS_DIR)
-#         if os.path.isdir(os.path.join(RECORDINGS_DIR, name))
-#     ]
+@app.get("/api/sessions/{session_id}/jobfiles")
+def get_jobfiles_for_session(session_id: str):
+    folder_path = os.path.join(RECORDINGS_DIR, session_id)
+    if not os.path.isdir(folder_path):
+        return []
+    files = [
+        f for f in os.listdir(folder_path)
+        if f.endswith(".json") and not f.startswith("metadata")
+    ]
+    return files
 
-# def load_metadata(path):
-#     try:
-#         with open(path, encoding="utf-8") as f:
-#             return json.load(f)
-#     except:
-#         return None
-
-# def get_total_sessions():
-#     return len(list_session_folders())
-
-# def get_recent_sessions():
-#     today = datetime.now().date()
-#     return sum(
-#         1 for folder in list_session_folders()
-#         if (meta := load_metadata(os.path.join(RECORDINGS_DIR, folder, "metadata.json")))
-#         and meta.get("created_at") == today.strftime("%Y-%m-%d")
-#     )
-
-# def get_match_success_rate():
-#     success, total = 0, 0
-#     for folder in list_session_folders():
-#         meta = load_metadata(os.path.join(RECORDINGS_DIR, folder, "metadata.json"))
-#         if meta:
-#             total += 1
-#             if meta.get("matched"):
-#                 success += 1
-#     return round((success / total) * 100, 1) if total else 0.0
-
-# def get_new_users_today():
-#     today = datetime.now().date()
-#     user_ids = {
-#         meta.get("user_id")
-#         for folder in list_session_folders()
-#         if (meta := load_metadata(os.path.join(RECORDINGS_DIR, folder, "metadata.json")))
-#         and meta.get("created_at") == today.strftime("%Y-%m-%d")
-#     }
-#     return len(user_ids)
-
-# def get_weekly_session_counts():
-#     weekly = defaultdict(int)
-#     weekday_kor = {"Mon": "월", "Tue": "화", "Wed": "수", "Thu": "목", "Fri": "금", "Sat": "토", "Sun": "일"}
-#     for folder in list_session_folders():
-#         try:
-#             date_str = folder.split("_")[0]
-#             weekday = datetime.strptime(date_str, "%Y%m%d").strftime("%a")
-#             weekly[weekday_kor[weekday]] += 1
-#         except:
-#             continue
-#     return [{"day": d, "count": weekly.get(d, 0)} for d in weekday_kor.values()]
-
-# def get_next_user_id():
-#     existing_ids = [
-#         meta.get("user_id")
-#         for folder in list_session_folders()
-#         if (meta := load_metadata(os.path.join(RECORDINGS_DIR, folder, "metadata.json")))
-#         and meta.get("user_id")
-#     ]
-#     return generate_user_id_new(existing_ids)
-
-# def generate_user_id_new(existing_ids):
-#     max_id = max((int(m.group(1)) for uid in existing_ids if (m := re.search(r"(\\d+)$", uid))), default=0)
-#     return f"{max_id + 1:04d}"
-
-# @app.get("/api/summary")
-# def get_summary():
-#     ages, locations, fields = [], [], []
-#     for folder in list_session_folders():
-#         meta = load_metadata(os.path.join(RECORDINGS_DIR, folder, "metadata.json"))
-#         if not meta:
-#             continue
-#         if age := meta.get("age"):
-#             ages.append(age)
-#         if loc := meta.get("location"):
-#             loc_main = str(loc).strip().split()[0] if str(loc).strip() else loc
-#             locations.append(loc_main)
-#         if field := meta.get("preferred_field"):
-#             fields.append(field)
-
-#     def bin_ages(ages):
-#         bins = Counter()
-#         for age in ages:
-#             try:
-#                 a = int(age)
-#                 if a < 70: bins["60대"] += 1
-#                 elif a < 80: bins["70대"] += 1
-#                 else: bins["80대 이상"] += 1
-#             except:
-#                 continue
-#         return bins
-
-#     return {
-#         "total_sessions": get_total_sessions(),
-#         "match_success_rate": get_match_success_rate(),
-#         "last_24h_sessions": get_recent_sessions(),
-#         "new_users": get_new_users_today(),
-#         "traffic_change": 4.5,
-#         "match_rate_change": -1.2,
-#         "recent_change": 6.3,
-#         "user_change": 3.1,
-#         "weekly_session_counts": get_weekly_session_counts(),
-#         "match_rate_trend": [],  # 고정값 대신 추후 함수 연결 가능
-#         "age_distribution": [{"label": k, "value": v} for k, v in bin_ages(ages).items()],
-#         "region_distribution": [{"label": k, "value": v} for k, v in Counter(locations).items()],
-#         "field_distribution": [{"label": k, "value": v} for k, v in Counter(fields).items()]
-#     }
-
-# @app.patch("/api/sessions/{session_id}/metadata")
-# async def update_metadata(session_id: str, request: Request):
-#     path = os.path.join(RECORDINGS_DIR, session_id, "metadata.json")
-#     if not os.path.exists(path):
-#         raise HTTPException(status_code=404, detail="metadata.json not found")
-
-#     try:
-#         metadata = load_metadata(path) or {}
-#         update_data = await request.json()
-#         if "is_job_seeking" in update_data:
-#             metadata["is_job_seeking"] = update_data["is_job_seeking"]
-#         with open(path, "w", encoding="utf-8") as f:
-#             json.dump(metadata, f, ensure_ascii=False, indent=2)
-#         return {"status": "success", "session_id": session_id}
-#     except Exception as e:
-#         raise HTTPException(status_code=500, detail=str(e))
-
-# @app.post("/api/sessions/{session_id}/init")
-# def initialize_metadata(session_id: str):
-#     folder = os.path.join(RECORDINGS_DIR, session_id)
-#     os.makedirs(folder, exist_ok=True)
-#     user_id = get_next_user_id()
-#     metadata = {
-#         "user_id": user_id,
-#         "created_at": datetime.now().strftime("%Y-%m-%d"),
-#         "matched": False,
-#         "job_seeking": False,
-#         "other_info": {}
-#     }
-#     with open(os.path.join(folder, "metadata.json"), "w", encoding="utf-8") as f:
-#         json.dump(metadata, f, ensure_ascii=False, indent=2)
-#     return {"message": "metadata initialized", "user_id": user_id}
-
-# @app.get("/api/sessions")
-# def get_sessions():
-#     try:
-#         return sorted(list_session_folders())
-#     except Exception as e:
-#         raise HTTPException(status_code=500, detail=str(e))
-
-# @app.get("/api/sessions/{session_id}/metadata")
-# def get_metadata(session_id: str):
-#     path = os.path.join(RECORDINGS_DIR, session_id, "metadata.json")
-#     if not os.path.exists(path):
-#         raise HTTPException(status_code=404, detail="metadata.json not found")
-#     return load_metadata(path)
-
-# @app.get("/api/sessions/{session_id}/transcript", response_class=PlainTextResponse)
-# def get_transcript(session_id: str):
-#     path = os.path.join(RECORDINGS_DIR, session_id, "transcript.txt")
-#     if not os.path.exists(path):
-#         raise HTTPException(status_code=404, detail="transcript.txt not found")
-#     with open(path, encoding="utf-8") as f:
-#         return f.read()
-
-# @app.get("/api/sessions/{session_id}/audios")
-# def get_audio_list(session_id: str):
-#     folder = os.path.join(RECORDINGS_DIR, session_id)
-#     if not os.path.exists(folder):
-#         raise HTTPException(status_code=404, detail="Session not found")
-#     return [
-#         f for f in os.listdir(folder)
-#         if f.endswith(".wav") and os.path.isfile(os.path.join(folder, f))
-#     ]
-
-# # 오디오 파일 서비스
-# app.mount("/recordings", StaticFiles(directory=RECORDINGS_DIR), name="recordings")
-
-
-
-
-# ########################################################
