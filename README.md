@@ -201,4 +201,4 @@
 ### [uzlnee](https://github.com/uzlnee)
 - 프로토타입 STT/TTS 개발
 - 최종 관리자 웹페이지 개발
-- BE 개발
+- 전체 FE 및 BE 웹 개발
